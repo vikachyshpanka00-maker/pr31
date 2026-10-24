@@ -1,21 +1,17 @@
 <template>
-  <div class="page">
-    <h1>Панель управления (защищено)</h1>
-    <p>Вы успешно авторизованы.</p>
-    <button @click="logout" class="btn-danger">Выйти</button>
+  <div>
+    <div v-for="(review, index) in course?.reviews" :key="index" class="review">
+      <p><strong>{{ review.author }}</strong> (Оценка: {{ review.rating }}/5)</p>
+      <p>{{ review.text }}</p>
+    </div>
   </div>
 </template>
 
 <script setup>
-import { useRouter } from 'vue-router'
-const router = useRouter()
-
-const logout = () => {
-  localStorage.removeItem('token')
-  router.push({ name: 'Login' })
-}
+import { inject } from 'vue'
+const course = inject('courseData')
 </script>
 
 <style scoped>
-.btn-danger { padding: 0.5rem 1rem; background: #c62828; color: white; border: none; border-radius: 4px; cursor: pointer; }
+.review { border-bottom: 1px solid #eee; padding: 10px 0; }
 </style>
